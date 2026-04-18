@@ -5,7 +5,7 @@ export const siteConfig = {
   whatsappDisplay: "+55 11 94735-2928",
   whatsappHref: "https://wa.me/5511947352928",
   instagram: "https://www.instagram.com/gate80.tech/",
-  linkedin: "https://www.linkedin.com/in/gate80/",
+  linkedin: "https://www.linkedin.com/company/gate80/",
   city: "São Paulo, SP, Brasil",
   address: "Travessa Cachoeira das Flores, 41 - CEP 05574-410",
   postalCode: "05574-410",

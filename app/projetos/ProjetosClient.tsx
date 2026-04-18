@@ -295,14 +295,14 @@ export default function ProjetosPage() {
                     <div
                       className={`relative aspect-[1/0.98] overflow-hidden border border-[#1c1c1c] ${project.frameClass}`}
                     >
-                      <div className="flex h-full items-center justify-center p-5 sm:p-6">
+                      <div className="flex h-full items-center justify-center p-2 sm:p-3">
                         <div
-                          className={`flex h-full w-full items-center justify-center border border-[#1c1c1c] ${project.imageWrapClass}`}
+                          className={`flex h-full w-full items-center justify-center ${project.imageWrapClass}`}
                         >
                           <Image
                             src={project.logo}
                             alt={project.logoAlt ?? project.name}
-                            className="h-auto w-[88%] max-w-[420px] object-contain"
+                            className="h-auto w-[96%] max-w-[500px] object-contain"
                             sizes="(min-width: 1280px) 430px, (min-width: 640px) 44vw, 84vw"
                           />
                         </div>

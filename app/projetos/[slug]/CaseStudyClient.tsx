@@ -264,14 +264,25 @@ export default function CaseStudyClient({
           <section className="relative py-16 sm:py-20">
             <div data-reveal="scale" className="intro-scale border border-[#1c1c1c] bg-white p-3 shadow-[4px_4px_0_#1c1c1c] sm:p-4">
               <div className="overflow-hidden border border-[#1c1c1c] bg-[#faf9f5]">
-                <Image
-                  src={project.heroImage ?? project.gallery[0]}
-                  alt={project.heroImageAlt ?? `Capa do projeto ${project.name}`}
-                  width={1600}
-                  height={980}
-                  className="h-auto w-full object-cover"
-                  priority
-                />
+                {project.heroVideo ? (
+                  <video
+                    className="h-auto w-full object-cover"
+                    src={project.heroVideo}
+                    controls
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : (
+                  <Image
+                    src={project.heroImage ?? project.gallery[0]}
+                    alt={project.heroImageAlt ?? `Capa do projeto ${project.name}`}
+                    width={1600}
+                    height={980}
+                    className="h-auto w-full object-cover"
+                    priority
+                  />
+                )}
               </div>
             </div>
 
@@ -280,50 +291,52 @@ export default function CaseStudyClient({
             </p>
           </section>
 
-          <section className="relative py-6 sm:py-10">
-            <div className="space-y-20">
-              {project.sections.map((section, index) => (
-                <div
-                  key={section.title}
-                  data-reveal={section.reverse ? "left" : "right"}
-                  className={`intro-rise grid gap-10 lg:items-start ${
-                    section.reverse
-                      ? "lg:grid-cols-[1.1fr_0.9fr]"
-                      : "lg:grid-cols-[0.9fr_1.1fr]"
-                  }`}
-                  style={{
-                    ["--intro-delay" as string]: `${index * 90}ms`,
-                    ["--reveal-delay" as string]: `${index * 110}ms`,
-                  }}
-                >
-                  <div className={section.reverse ? "lg:order-2" : ""}>
-                    <div className="border border-[#1c1c1c] bg-white p-3 shadow-[4px_4px_0_#1c1c1c]">
-                      <div className="overflow-hidden border border-[#1c1c1c] bg-[#faf9f5]">
-                        <Image
-                          src={section.image}
-                          alt={section.imageAlt}
-                          width={1200}
-                          height={900}
-                          className="h-auto w-full object-cover"
-                        />
+          {project.sections.length ? (
+            <section className="relative py-6 sm:py-10">
+              <div className="space-y-20">
+                {project.sections.map((section, index) => (
+                  <div
+                    key={section.title}
+                    data-reveal={section.reverse ? "left" : "right"}
+                    className={`intro-rise grid gap-10 lg:items-start ${
+                      section.reverse
+                        ? "lg:grid-cols-[1.1fr_0.9fr]"
+                        : "lg:grid-cols-[0.9fr_1.1fr]"
+                    }`}
+                    style={{
+                      ["--intro-delay" as string]: `${index * 90}ms`,
+                      ["--reveal-delay" as string]: `${index * 110}ms`,
+                    }}
+                  >
+                    <div className={section.reverse ? "lg:order-2" : ""}>
+                      <div className="border border-[#1c1c1c] bg-white p-3 shadow-[4px_4px_0_#1c1c1c]">
+                        <div className="overflow-hidden border border-[#1c1c1c] bg-[#faf9f5]">
+                          <Image
+                            src={section.image}
+                            alt={section.imageAlt}
+                            width={1200}
+                            height={900}
+                            className="h-auto w-full object-cover"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div
-                    className={`space-y-5 ${section.reverse ? "lg:order-1" : ""}`}
-                  >
-                    <h2 className="text-[2.1rem] font-extrabold leading-[0.92] tracking-[-0.07em] text-[#1c1c1c] sm:text-[3rem]">
-                      {section.title}
-                    </h2>
-                    <p className="max-w-[620px] text-base leading-relaxed text-[#4f4f4f] sm:text-lg">
-                      {section.body}
-                    </p>
+                    <div
+                      className={`space-y-5 ${section.reverse ? "lg:order-1" : ""}`}
+                    >
+                      <h2 className="text-[2.1rem] font-extrabold leading-[0.92] tracking-[-0.07em] text-[#1c1c1c] sm:text-[3rem]">
+                        {section.title}
+                      </h2>
+                      <p className="max-w-[620px] text-base leading-relaxed text-[#4f4f4f] sm:text-lg">
+                        {section.body}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <section className="relative py-16 sm:py-20">
             {project.gallery.length ? (
@@ -349,7 +362,11 @@ export default function CaseStudyClient({
               </div>
             ) : null}
 
-            <p className="mt-8 max-w-[1260px] text-base leading-relaxed text-[#4f4f4f] sm:text-lg">
+            <p
+              className={`max-w-[1260px] text-base leading-relaxed text-[#4f4f4f] sm:text-lg ${
+                project.gallery.length ? "mt-8" : ""
+              }`}
+            >
               {project.closingText}
             </p>
           </section>

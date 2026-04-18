@@ -5,6 +5,9 @@ import psicologoLogo from "@/public/logo_psicologo/logo_psicologo.png";
 import dashboardLogo from "@/public/logo_dashboard/Dashboard - Editado.png";
 import portfolioLogo from "@/public/logo_portfolio/logotipo.png";
 import vidracariaLogo from "@/public/logo_vidracaria/logo.png";
+import maryLogo from "@/public/logo_mary/WhatsApp Image 2026-04-15 at 12.06.44 (1).jpeg";
+import whatsappLogo from "@/public/logo_whatsapp/2.png";
+import estoqueLogo from "@/public/logo_estoque/3.png";
 
 export type ProjectCaseStudy = {
   slug: string;
@@ -16,6 +19,7 @@ export type ProjectCaseStudy = {
   heroBody: string;
   heroImage?: string;
   heroImageAlt?: string;
+  heroVideo?: string;
   frameClass: string;
   imageWrapClass: string;
   logo: StaticImageData;
@@ -263,6 +267,102 @@ export const projectCaseStudies: ProjectCaseStudy[] = [
     ],
     closingText:
       "O resultado foi um portfolio mais consistente e expressivo, pensado para apresentar identidade, projetos e capacidade criativa com mais clareza.",
+  },
+  {
+    slug: "mary-esmalteria",
+    name: "Mary Esmalteria",
+    category: "Esmalteria",
+    description:
+      "Projeto digital pensado para apresentar os serviços da esmalteria com mais presença visual, leitura clara e atendimento mais fácil de iniciar.",
+    heroTag: "+ Project",
+    heroTitle: "Mary Esmalteria",
+    heroBody:
+      "Uma presença digital criada para destacar estética, cuidado e identidade visual em uma vitrine mais organizada e profissional.",
+    heroVideo: "/mary_esmalteria/WhatsApp Video 2026-04-14 at 22.33.25 (1) (1).mp4",
+    frameClass: "bg-[#faf9f5]",
+    imageWrapClass: "bg-[#f3e8ef]",
+    logo: maryLogo,
+    logoAlt: "Logo do projeto Mary Esmalteria",
+    gallery: [],
+    sections: [],
+    closingText:
+      "O resultado foi uma apresentação digital mais alinhada com a proposta da Mary Esmalteria, reforçando percepção de cuidado, estilo e profissionalismo desde o primeiro contato.",
+  },
+  {
+    slug: "automacao-atendimento-whatsapp",
+    name: "Automação Atendimento WhatsApp",
+    category: "Barbearia",
+    description:
+      "Bot de autoatendimento para WhatsApp criado para agilizar respostas, organizar conversas e facilitar o início do agendamento.",
+    heroTag: "+ Project",
+    heroTitle: "Automação Atendimento WhatsApp",
+    heroBody:
+      "Um fluxo automatizado pensado para transformar o WhatsApp em um canal comercial mais rápido, claro e funcional para a rotina da barbearia.",
+    heroVideo: "/whatsapp/video automação whatsapp site (1).mp4",
+    frameClass: "bg-[#faf9f5]",
+    imageWrapClass: "bg-[#efe7dc]",
+    logo: whatsappLogo,
+    logoAlt: "Logo do projeto de automação de atendimento WhatsApp",
+    gallery: [],
+    sections: [],
+    closingText:
+      "O resultado foi uma automação mais objetiva para o atendimento inicial, reduzindo respostas repetitivas e deixando o fluxo comercial da barbearia mais organizado.",
+  },
+  {
+    slug: "controle-de-estoque",
+    name: "Controle de Estoque",
+    category: "Operação",
+    description:
+      "Sistema visual para organizar estoque, acompanhar movimentações e dar mais clareza à operação interna do negócio.",
+    heroTag: "+ Project",
+    heroTitle: "Controle de Estoque",
+    heroBody:
+      "Uma solução pensada para centralizar leitura de entradas, saídas e acompanhamento de itens com uma interface mais simples e prática.",
+    heroImage: "/estoque/image.png",
+    heroImageAlt: "Tela principal do projeto Controle de Estoque",
+    frameClass: "bg-[#faf9f5]",
+    imageWrapClass: "bg-[#ecefe8]",
+    logo: estoqueLogo,
+    logoAlt: "Logo do projeto Controle de Estoque",
+    gallery: [
+      "/estoque/image copy 5.png",
+      "/estoque/image copy 6.png",
+      "/estoque/image copy 7.png",
+    ],
+    sections: [
+      {
+        title: "Leitura mais clara da operação",
+        body:
+          "O projeto foi estruturado para facilitar a visualização do que entra, do que sai e do que precisa de atenção. A ideia foi reduzir ruído operacional e dar mais confiança para o controle diário.",
+        image: "/estoque/image copy.png",
+        imageAlt: "Segunda tela do projeto Controle de Estoque",
+      },
+      {
+        title: "Organização de itens e movimentações",
+        body:
+          "As telas foram pensadas para apoiar cadastro, consulta e acompanhamento de produtos, criando uma base mais ordenada para decisões rápidas e operação interna mais estável.",
+        image: "/estoque/image copy 2.png",
+        imageAlt: "Terceira tela do projeto Controle de Estoque",
+        reverse: true,
+      },
+      {
+        title: "Controle com menos atrito",
+        body:
+          "O sistema busca transformar gestão de estoque em algo mais visual e menos confuso, aproximando controle operacional de uma rotina realmente utilizável no dia a dia.",
+        image: "/estoque/image copy 3.png",
+        imageAlt: "Quarta tela do projeto Controle de Estoque",
+      },
+      {
+        title: "Acompanhamento contínuo",
+        body:
+          "Com uma estrutura mais organizada, o negócio passa a acompanhar volume, status e movimentação com mais previsibilidade, reduzindo falhas e melhorando a leitura do estoque.",
+        image: "/estoque/image copy 4.png",
+        imageAlt: "Quinta tela do projeto Controle de Estoque",
+        reverse: true,
+      },
+    ],
+    closingText:
+      "O resultado foi um controle de estoque mais claro, funcional e fácil de manter, ajudando a transformar rotina operacional em acompanhamento mais consistente.",
   },
   {
     slug: "vidracaria",
