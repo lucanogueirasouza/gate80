@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { ReactLenis } from "lenis/react";
 import { useEffect, useRef, useState } from "react";
-import { NavbarBrand } from "./NavbarBrand";
-import { ThemeToggle } from "./ThemeToggle";
+import { SiteNavbar } from "./SiteNavbar";
 import { useScrollReveal } from "../useScrollReveal";
 import { siteConfig } from "../siteConfig";
 
@@ -21,12 +20,6 @@ const footerLinks = [
   { label: "Termos & Condições", href: "/termos" },
   { label: "Fale com a Gate80", href: "/contato" },
 ];
-
-type MenuToggleProps = {
-  isOpen: boolean;
-  onClick: () => void;
-  className?: string;
-};
 
 type SocialIconProps = {
   name: "instagram" | "linkedin" | "whatsapp" | "email";
@@ -99,34 +92,6 @@ function SocialIcon({ name }: SocialIconProps) {
   );
 }
 
-function MenuToggle({ isOpen, onClick, className = "" }: MenuToggleProps) {
-  return (
-    <button
-      type="button"
-      aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-      aria-expanded={isOpen}
-      onClick={onClick}
-      className={`menu-toggle-button relative flex h-[62px] w-[62px] items-center justify-center border border-[#1c1c1c] bg-white sm:h-[74px] sm:w-[74px] ${className}`}
-    >
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "rotate-45 translate-y-0" : "-translate-y-[8px] sm:-translate-y-[10px]"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-200 ease-out sm:w-8 ${
-          isOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "-rotate-45 translate-y-0" : "translate-y-[8px] sm:translate-y-[10px]"
-        }`}
-      />
-    </button>
-  );
-}
-
 function ScrollGlyph({
   rotation,
   glyph,
@@ -158,7 +123,6 @@ export function LegalPageShell({
   glyph: string;
   children: React.ReactNode;
 }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [footerHeight, setFooterHeight] = useState(0);
   const [rotation, setRotation] = useState(0);
   const footerRef = useRef<HTMLElement | null>(null);
@@ -217,60 +181,7 @@ export function LegalPageShell({
         <div aria-hidden="true" className="hero-dots" />
 
         <div className="page-fade-in relative z-10 mx-auto flex min-h-screen w-full max-w-[1520px] flex-col px-4 py-4 sm:px-8 sm:py-8 lg:px-14">
-          <div className="relative z-30">
-            <header className="relative z-10 flex items-start justify-between intro-rise">
-              <Link href="/" className="inline-flex items-center">
-                <NavbarBrand />
-              </Link>
-
-              <div className="flex items-center gap-3">
-                <ThemeToggle />
-                <div className="offset-shadow">
-                  <MenuToggle
-                    isOpen={menuOpen}
-                    onClick={() => setMenuOpen((current) => !current)}
-                    className="offset-shadow__surface"
-                  />
-                </div>
-              </div>
-            </header>
-
-            <div
-              className={`absolute inset-x-0 top-0 z-20 overflow-hidden border border-[#2f2f2f] bg-[#1f1f1f] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${
-                menuOpen
-                  ? "pointer-events-auto max-h-[520px] translate-y-0 opacity-100"
-                  : "pointer-events-none max-h-0 -translate-y-2 opacity-0"
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <Link
-                  href="/"
-                  className="inline-flex items-center px-4 py-5"
-                >
-                  <NavbarBrand />
-                </Link>
-
-                <MenuToggle
-                  isOpen={menuOpen}
-                  onClick={() => setMenuOpen(false)}
-                  className="transition-colors duration-150 hover:bg-[#f3f3f3]"
-                />
-              </div>
-
-              <nav aria-label="Navegacao principal" className="pb-3">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex justify-center border-t border-[#2f2f2f] px-4 py-5 text-center text-[1.9rem] font-semibold tracking-tight transition-colors duration-200 hover:bg-white hover:text-[#111] sm:text-4xl md:text-5xl"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </div>
+          <SiteNavbar items={navItems} footerItems={footerLinks} />
           <section className="relative pt-16 sm:pt-20 lg:pt-24">
             <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
               <div className="space-y-7" data-reveal="left">

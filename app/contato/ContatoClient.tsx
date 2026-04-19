@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ReactLenis } from "lenis/react";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { NavbarBrand } from "../components/NavbarBrand";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { SiteNavbar } from "../components/SiteNavbar";
 import { useScrollReveal } from "../useScrollReveal";
 import { siteConfig } from "../siteConfig";
 
@@ -22,12 +22,6 @@ const footerLinks = [
   { label: "Termos & Condições", href: "/termos" },
   { label: "Fale com a Gate80", href: "/contato" },
 ];
-
-type MenuToggleProps = {
-  isOpen: boolean;
-  onClick: () => void;
-  className?: string;
-};
 
 type SocialIconProps = {
   name: "instagram" | "linkedin" | "whatsapp" | "email";
@@ -100,34 +94,6 @@ function SocialIcon({ name }: SocialIconProps) {
   );
 }
 
-function MenuToggle({ isOpen, onClick, className = "" }: MenuToggleProps) {
-  return (
-    <button
-      type="button"
-      aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-      aria-expanded={isOpen}
-      onClick={onClick}
-      className={`menu-toggle-button relative flex h-[62px] w-[62px] items-center justify-center border border-[#1c1c1c] bg-white sm:h-[74px] sm:w-[74px] ${className}`}
-    >
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "rotate-45 translate-y-0" : "-translate-y-[8px] sm:-translate-y-[10px]"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-200 ease-out sm:w-8 ${
-          isOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "-rotate-45 translate-y-0" : "translate-y-[8px] sm:translate-y-[10px]"
-        }`}
-      />
-    </button>
-  );
-}
-
 function ScrollFlower({ rotation }: { rotation: number }) {
   return (
     <div
@@ -143,7 +109,6 @@ function ScrollFlower({ rotation }: { rotation: number }) {
 }
 
 export default function ContatoPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [footerHeight, setFooterHeight] = useState(0);
   const [rotation, setRotation] = useState(0);
   const [formState, setFormState] = useState<
@@ -241,60 +206,7 @@ export default function ContatoPage() {
         <div aria-hidden="true" className="hero-dots" />
 
         <div className="page-fade-in relative z-10 mx-auto flex min-h-screen w-full max-w-[1520px] flex-col px-4 py-4 sm:px-8 sm:py-8 lg:px-14">
-          <div className="relative z-30">
-            <header className="relative z-10 flex items-start justify-between intro-rise">
-              <Link href="/" className="inline-flex items-center">
-                <NavbarBrand />
-              </Link>
-
-              <div className="flex items-center gap-3">
-                <ThemeToggle />
-                <div className="offset-shadow">
-                  <MenuToggle
-                    isOpen={menuOpen}
-                    onClick={() => setMenuOpen((current) => !current)}
-                    className="offset-shadow__surface"
-                  />
-                </div>
-              </div>
-            </header>
-
-            <div
-              className={`absolute inset-x-0 top-0 z-20 overflow-hidden border border-[#2f2f2f] bg-[#1f1f1f] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${
-                menuOpen
-                  ? "pointer-events-auto max-h-[520px] translate-y-0 opacity-100"
-                  : "pointer-events-none max-h-0 -translate-y-2 opacity-0"
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <Link
-                  href="/"
-                  className="inline-flex items-center px-4 py-5"
-                >
-                  <NavbarBrand />
-                </Link>
-
-                <MenuToggle
-                  isOpen={menuOpen}
-                  onClick={() => setMenuOpen(false)}
-                  className="transition-colors duration-150 hover:bg-[#f3f3f3]"
-                />
-              </div>
-
-              <nav aria-label="Navegacao principal" className="pb-3">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex justify-center border-t border-[#2f2f2f] px-4 py-5 text-center text-[1.9rem] font-semibold tracking-tight transition-colors duration-200 hover:bg-white hover:text-[#111] sm:text-4xl md:text-5xl"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </div>
+          <SiteNavbar items={navItems} footerItems={footerLinks} />
           <section className="relative pt-16 sm:pt-20 lg:pt-24">
             <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
               <div className="space-y-7" data-reveal="left">
@@ -323,40 +235,36 @@ export default function ContatoPage() {
             </div>
           </section>
 
-          <section className="relative py-20 sm:py-24">
-            <div data-reveal="up" className="intro-scale border border-[#1c1c1c] bg-white px-5 py-6 shadow-[4px_4px_0_#1c1c1c] sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-              <div className="grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:gap-16">
-                <div className="space-y-7" data-reveal="left">
-                  <p className="pixel-font text-xs uppercase tracking-[0.18em] text-[#5d5d5d] sm:text-sm">
+          <section className="relative py-10 md:hidden">
+            <div className="border border-[#1c1c1c] bg-white px-5 py-6 shadow-[4px_4px_0_#1c1c1c]">
+              <div className="grid gap-8">
+                <div className="space-y-6">
+                  <p className="pixel-font text-xs uppercase tracking-[0.18em] text-[#5d5d5d]">
                     + Inquiry
                   </p>
-                  <h2 className="max-w-[620px] text-[2.4rem] font-extrabold leading-[0.9] tracking-[-0.08em] text-[#4a4a4a] sm:text-[4rem]">
+                  <h2 className="max-w-[620px] text-[2.2rem] font-extrabold leading-[0.92] tracking-[-0.08em] text-[#4a4a4a]">
                     Adoraríamos ouvir de você.
                   </h2>
-                  <p className="max-w-[640px] text-lg leading-relaxed text-[#5a5a5a] sm:text-xl">
+                  <p className="text-base leading-relaxed text-[#5a5a5a]">
                     Seja para tirar dúvidas, pedir um orçamento ou iniciar um
                     projeto, estamos prontos para entender o contexto e propor a
                     melhor direção para sua presença digital.
                   </p>
-                  <div className="pt-4 text-[1.5rem] font-semibold tracking-[-0.05em] text-[#171717]">
+                  <div className="pt-2 text-[1.15rem] font-semibold tracking-[-0.05em] text-[#171717] break-words">
                     {siteConfig.email}
                   </div>
-                  <div className="space-y-2 text-base leading-relaxed text-[#5a5a5a]">
+                  <div className="space-y-2 text-sm leading-relaxed text-[#5a5a5a]">
                     <p>{siteConfig.whatsappDisplay}</p>
                     <p>{siteConfig.city}</p>
                   </div>
                 </div>
 
-                <form
-                  onSubmit={handleSubmit}
-                  className="grid gap-5"
-                  data-reveal="right"
-                >
+                <form onSubmit={handleSubmit} className="grid gap-4">
                   <input type="hidden" name="_subject" value="Novo contato pelo site da Gate80" />
                   <input type="hidden" name="_captcha" value="false" />
 
                   <label className="grid gap-2">
-                    <span className="pixel-font text-[0.7rem] uppercase tracking-[0.16em] text-[#666]">
+                    <span className="pixel-font text-[0.68rem] uppercase tracking-[0.16em] text-[#666]">
                       Nome
                     </span>
                     <input
@@ -365,12 +273,12 @@ export default function ContatoPage() {
                       placeholder="Seu nome"
                       required
                       disabled={formState === "submitting"}
-                      className="border border-[#cfcfcf] px-4 py-4 text-base text-[#1a1a1a] outline-none transition-colors duration-200 placeholder:text-[#9b9b9b] focus:border-[#1c1c1c]"
+                      className="border border-[#cfcfcf] px-4 py-3.5 text-base text-[#1a1a1a] outline-none transition-colors duration-200 placeholder:text-[#9b9b9b] focus:border-[#1c1c1c]"
                     />
                   </label>
 
                   <label className="grid gap-2">
-                    <span className="pixel-font text-[0.7rem] uppercase tracking-[0.16em] text-[#666]">
+                    <span className="pixel-font text-[0.68rem] uppercase tracking-[0.16em] text-[#666]">
                       Email
                     </span>
                     <input
@@ -379,12 +287,12 @@ export default function ContatoPage() {
                       placeholder="você@email.com"
                       required
                       disabled={formState === "submitting"}
-                      className="border border-[#cfcfcf] px-4 py-4 text-base text-[#1a1a1a] outline-none transition-colors duration-200 placeholder:text-[#9b9b9b] focus:border-[#1c1c1c]"
+                      className="border border-[#cfcfcf] px-4 py-3.5 text-base text-[#1a1a1a] outline-none transition-colors duration-200 placeholder:text-[#9b9b9b] focus:border-[#1c1c1c]"
                     />
                   </label>
 
                   <label className="grid gap-2">
-                    <span className="pixel-font text-[0.7rem] uppercase tracking-[0.16em] text-[#666]">
+                    <span className="pixel-font text-[0.68rem] uppercase tracking-[0.16em] text-[#666]">
                       Projeto
                     </span>
                     <textarea
@@ -413,11 +321,11 @@ export default function ContatoPage() {
                     </div>
                   ) : null}
 
-                  <div className="offset-shadow mt-1 mb-2 w-full self-start sm:mb-0 sm:w-fit">
+                  <div className="offset-shadow mt-1 w-full">
                     <button
                       type="submit"
                       disabled={formState === "submitting"}
-                      className="offset-shadow__surface inline-flex w-full items-center justify-center border border-[#1c1c1c] bg-white px-6 py-4 text-base font-semibold text-[#111] transition-colors duration-200 hover:bg-[#f3f3f3] disabled:cursor-not-allowed disabled:bg-[#f4f4f4] disabled:text-[#6a6a6a] sm:w-auto"
+                      className="offset-shadow__surface inline-flex w-full items-center justify-center border border-[#1c1c1c] bg-white px-6 py-4 text-base font-semibold text-[#111] transition-colors duration-200 hover:bg-[#f3f3f3] disabled:cursor-not-allowed disabled:bg-[#f4f4f4] disabled:text-[#6a6a6a]"
                     >
                       {formState === "submitting" ? "Enviando..." : "Enviar"}
                     </button>
@@ -425,6 +333,121 @@ export default function ContatoPage() {
                 </form>
               </div>
             </div>
+          </section>
+
+          <section className="relative hidden -mt-48 -mb-40 overflow-hidden py-0 md:block lg:-mt-[15rem] lg:-mb-56">
+            <ContainerScroll
+              titleComponent={<></>}
+              outerClassName="h-[46rem] p-0 md:px-4"
+              innerClassName="py-0"
+              cardClassName="h-auto min-h-[40rem] max-w-[72rem]"
+              viewportClassName="h-full w-full overflow-hidden rounded-2xl bg-white p-2 md:p-4"
+            >
+              <div
+                className="h-full w-full"
+              >
+                <div className="h-full border border-[#1c1c1c] bg-white px-5 py-6 shadow-[4px_4px_0_#1c1c1c] sm:px-8 sm:py-8 lg:px-10 lg:py-10">
+                  <div className="grid h-full gap-8 lg:grid-cols-[1fr_0.92fr] lg:gap-12">
+                    <div className="space-y-7">
+                      <p className="pixel-font text-xs uppercase tracking-[0.18em] text-[#5d5d5d] sm:text-sm">
+                        + Inquiry
+                      </p>
+                      <h2 className="max-w-[620px] text-[2.4rem] font-extrabold leading-[0.9] tracking-[-0.08em] text-[#4a4a4a] sm:text-[4rem]">
+                        Adoraríamos ouvir de você.
+                      </h2>
+                      <p className="max-w-[640px] text-lg leading-relaxed text-[#5a5a5a] sm:text-xl">
+                        Seja para tirar dúvidas, pedir um orçamento ou iniciar um
+                        projeto, estamos prontos para entender o contexto e propor a
+                        melhor direção para sua presença digital.
+                      </p>
+                      <div className="pt-2 text-[1.5rem] font-semibold tracking-[-0.05em] text-[#171717]">
+                        {siteConfig.email}
+                      </div>
+                      <div className="space-y-2 text-base leading-relaxed text-[#5a5a5a]">
+                        <p>{siteConfig.whatsappDisplay}</p>
+                        <p>{siteConfig.city}</p>
+                      </div>
+                    </div>
+
+                    <form
+                      onSubmit={handleSubmit}
+                      className="grid h-fit gap-4 self-start"
+                    >
+                      <input type="hidden" name="_subject" value="Novo contato pelo site da Gate80" />
+                      <input type="hidden" name="_captcha" value="false" />
+
+                      <label className="grid gap-2">
+                        <span className="pixel-font text-[0.7rem] uppercase tracking-[0.16em] text-[#666]">
+                          Nome
+                        </span>
+                        <input
+                          name="nome"
+                          type="text"
+                          placeholder="Seu nome"
+                          required
+                          disabled={formState === "submitting"}
+                          className="border border-[#cfcfcf] px-4 py-4 text-base text-[#1a1a1a] outline-none transition-colors duration-200 placeholder:text-[#9b9b9b] focus:border-[#1c1c1c]"
+                        />
+                      </label>
+
+                      <label className="grid gap-2">
+                        <span className="pixel-font text-[0.7rem] uppercase tracking-[0.16em] text-[#666]">
+                          Email
+                        </span>
+                        <input
+                          name="email"
+                          type="email"
+                          placeholder="você@email.com"
+                          required
+                          disabled={formState === "submitting"}
+                          className="border border-[#cfcfcf] px-4 py-4 text-base text-[#1a1a1a] outline-none transition-colors duration-200 placeholder:text-[#9b9b9b] focus:border-[#1c1c1c]"
+                        />
+                      </label>
+
+                      <label className="grid gap-2">
+                        <span className="pixel-font text-[0.7rem] uppercase tracking-[0.16em] text-[#666]">
+                          Projeto
+                        </span>
+                        <textarea
+                          name="projeto"
+                          rows={4}
+                          placeholder="Me conte um pouco sobre a ideia, o tipo de entrega que você precisa e o momento do projeto."
+                          required
+                          disabled={formState === "submitting"}
+                          className="resize-none border border-[#cfcfcf] px-4 py-4 text-base leading-relaxed text-[#1a1a1a] outline-none transition-colors duration-200 placeholder:text-[#9b9b9b] focus:border-[#1c1c1c]"
+                        />
+                      </label>
+
+                      {formState !== "idle" ? (
+                        <div
+                          className={`border px-4 py-4 text-sm leading-relaxed ${
+                            formState === "success"
+                              ? "border-[#1c1c1c] bg-[#f3f0e8] text-[#181818]"
+                              : formState === "error"
+                                ? "border-[#1c1c1c] bg-[#f8ecec] text-[#181818]"
+                                : "border-[#1c1c1c] bg-[#faf9f5] text-[#454545]"
+                          }`}
+                        >
+                          {formState === "submitting"
+                            ? "Enviando sua mensagem..."
+                            : formMessage}
+                        </div>
+                      ) : null}
+
+                      <div className="offset-shadow mt-1 mb-2 w-full self-start sm:mb-0 sm:w-fit">
+                        <button
+                          type="submit"
+                          disabled={formState === "submitting"}
+                          className="offset-shadow__surface inline-flex w-full items-center justify-center border border-[#1c1c1c] bg-white px-6 py-4 text-base font-semibold text-[#111] transition-colors duration-200 hover:bg-[#f3f3f3] disabled:cursor-not-allowed disabled:bg-[#f4f4f4] disabled:text-[#6a6a6a] sm:w-auto"
+                        >
+                          {formState === "submitting" ? "Enviando..." : "Enviar"}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </ContainerScroll>
           </section>
 
           <section className="relative py-10 sm:py-16">

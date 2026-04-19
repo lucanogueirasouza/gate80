@@ -5,9 +5,13 @@ import Link from "next/link";
 import { ReactLenis } from "lenis/react";
 import { useEffect, useRef, useState } from "react";
 import type { StaticImageData } from "next/image";
-import { NavbarBrand } from "./components/NavbarBrand";
-import { ThemeToggle } from "./components/ThemeToggle";
+import SpotlightCard from "./components/SpotlightCard";
+import { SiteNavbar } from "./components/SiteNavbar";
 import { useScrollReveal } from "./useScrollReveal";
+import {
+  PricingContainer,
+  type PricingPlan,
+} from "@/components/ui/pricing-container";
 import escolaLogo from "@/public/logo_escola/logo_escola.png";
 import farmandoAuraLogo from "@/public/logo_farmandoaura/logo_farmandoaura.png";
 import psicologoLogo from "@/public/logo_psicologo/logo_psicologo.png";
@@ -87,18 +91,19 @@ const projects: ProjectCard[] = [
   },
 ];
 
-const combos = [
+const combos: PricingPlan[] = [
   {
     name: "O Essencial",
     comboPrice: "550 R$ a vista + 30 R$/mes",
     separatePrice: "635 R$ + 35 R$/mes",
     badgeCode: "ESS",
     badgeLabel: "Base digital",
-    items: [
+    features: [
       "Google Meu Negócio",
       "Landing page simples",
       "Cardápio ou catálogo digital",
     ],
+    accent: "bg-[#4c4c4c]",
   },
   {
     name: "Restaurantes",
@@ -106,11 +111,13 @@ const combos = [
     separatePrice: "650 R$",
     badgeCode: "FOOD",
     badgeLabel: "Fluxo rápido",
-    items: [
+    features: [
       "Cardápio digital com QR Code",
       "Bot de atendimento para WhatsApp",
       "Dashboard de vendas mensal",
     ],
+    accent: "bg-[#4c4c4c]",
+    isPopular: true,
   },
   {
     name: "Organizacao",
@@ -118,11 +125,12 @@ const combos = [
     separatePrice: "900 R$",
     badgeCode: "OPS",
     badgeLabel: "Controle interno",
-    items: [
+    features: [
       "Controle de estoque com VBA",
       "Gestao financeira e vendas",
       "Automacao de documentos",
     ],
+    accent: "bg-[#4c4c4c]",
   },
 ];
 
@@ -164,12 +172,6 @@ const footerLinks = [
   { label: "Termos & Condições", href: "/termos" },
   { label: "Fale com a Gate80", href: "/contato" },
 ];
-
-type MenuToggleProps = {
-  isOpen: boolean;
-  onClick: () => void;
-  className?: string;
-};
 
 type SocialIconProps = {
   name: "instagram" | "linkedin" | "whatsapp" | "email";
@@ -242,36 +244,7 @@ function SocialIcon({ name }: SocialIconProps) {
   );
 }
 
-function MenuToggle({ isOpen, onClick, className = "" }: MenuToggleProps) {
-  return (
-    <button
-      type="button"
-      aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-      aria-expanded={isOpen}
-      onClick={onClick}
-      className={`menu-toggle-button relative flex h-[62px] w-[62px] items-center justify-center border border-[#1c1c1c] bg-white sm:h-[74px] sm:w-[74px] ${className}`}
-    >
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "rotate-45 translate-y-0" : "-translate-y-[8px] sm:-translate-y-[10px]"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-200 ease-out sm:w-8 ${
-          isOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "-rotate-45 translate-y-0" : "translate-y-[8px] sm:translate-y-[10px]"
-        }`}
-      />
-    </button>
-  );
-}
-
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [footerHeight, setFooterHeight] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const projectsSectionRef = useRef<HTMLElement | null>(null);
@@ -374,60 +347,7 @@ export default function Home() {
       >
         <div aria-hidden="true" className="hero-dots" />
         <div className="page-fade-in relative z-10 mx-auto flex min-h-screen w-full max-w-[1520px] flex-col px-4 py-4 sm:px-8 sm:py-8 lg:px-14">
-          <div className="relative z-30">
-            <header className="relative z-10 flex items-start justify-between intro-rise">
-              <Link href="/" className="inline-flex items-center">
-                <NavbarBrand />
-              </Link>
-
-              <div className="flex items-center gap-3">
-                <ThemeToggle />
-                <div className="offset-shadow">
-                  <MenuToggle
-                    isOpen={menuOpen}
-                    onClick={() => setMenuOpen((current) => !current)}
-                    className="offset-shadow__surface"
-                  />
-                </div>
-              </div>
-            </header>
-
-            <div
-              className={`absolute inset-x-0 top-0 z-20 overflow-hidden border border-[#2f2f2f] bg-[#1f1f1f] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${
-                menuOpen
-                  ? "pointer-events-auto max-h-[520px] translate-y-0 opacity-100"
-                  : "pointer-events-none max-h-0 -translate-y-2 opacity-0"
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <Link
-                  href="/"
-                  className="inline-flex items-center px-4 py-5"
-                >
-                  <NavbarBrand />
-                </Link>
-
-                <MenuToggle
-                  isOpen={menuOpen}
-                  onClick={() => setMenuOpen(false)}
-                  className="transition-colors duration-150 hover:bg-[#f3f3f3]"
-                />
-              </div>
-
-              <nav aria-label="Navegacao principal" className="pb-3">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex justify-center border-t border-[#2f2f2f] px-4 py-5 text-center text-[1.9rem] font-semibold tracking-tight transition-colors duration-200 hover:bg-white hover:text-[#111] sm:text-4xl md:text-5xl"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </div>
+          <SiteNavbar items={navItems} footerItems={footerLinks} />
           <section
             id="home"
             className="relative flex flex-1 items-center py-16 sm:py-20 lg:py-10"
@@ -510,7 +430,8 @@ export default function Home() {
               </div>
 
               <div className="grid gap-6">
-                <div
+                <SpotlightCard
+                  spotlightColor="rgba(255,255,255,0.1)"
                   className="intro-scale grid gap-6 border border-[#1c1c1c] bg-[#1f1f1f] p-6 text-[#f7f4ec] sm:p-8 lg:grid-cols-[1.12fr_0.88fr]"
                   style={{ ["--intro-delay" as string]: "80ms" }}
                 >
@@ -534,10 +455,11 @@ export default function Home() {
                       para entregar um produto consistente do inicio ao fim.
                     </p>
                   </div>
-                </div>
+                </SpotlightCard>
 
                 <div className="grid gap-4 sm:grid-cols-3">
-                  <div
+                  <SpotlightCard
+                    spotlightColor="rgba(24,24,24,0.08)"
                     className="intro-rise border border-[#1c1c1c] bg-white p-5"
                     style={{ ["--intro-delay" as string]: "120ms" }}
                   >
@@ -551,9 +473,10 @@ export default function Home() {
                       Cada página é pensada para comunicar valor sem excesso de
                       informação e sem visual genérico.
                     </p>
-                  </div>
+                  </SpotlightCard>
 
-                  <div
+                  <SpotlightCard
+                    spotlightColor="rgba(24,24,24,0.08)"
                     className="intro-rise border border-[#1c1c1c] bg-white p-5"
                     style={{ ["--intro-delay" as string]: "180ms" }}
                   >
@@ -567,9 +490,10 @@ export default function Home() {
                       Organizamos conteudo, fluxos e ferramentas para a empresa
                       ter mais controle e mais presença digital.
                     </p>
-                  </div>
+                  </SpotlightCard>
 
-                  <div
+                  <SpotlightCard
+                    spotlightColor="rgba(24,24,24,0.08)"
                     className="intro-rise border border-[#1c1c1c] bg-white p-5"
                     style={{ ["--intro-delay" as string]: "240ms" }}
                   >
@@ -583,7 +507,7 @@ export default function Home() {
                       O objetivo final e simples: ajudar sua marca a transmitir
                       mais confiança e converter melhor.
                     </p>
-                  </div>
+                  </SpotlightCard>
                 </div>
               </div>
             </div>
@@ -704,65 +628,10 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="grid gap-6 xl:grid-cols-3">
-                {combos.map((combo, index) => (
-                  <article
-                    key={combo.name}
-                    data-reveal="scale"
-                    className="intro-scale flex h-full flex-col border border-[#1c1c1c] bg-white p-6 shadow-[4px_4px_0_#1c1c1c] sm:p-8"
-                    style={{
-                      ["--intro-delay" as string]: `${index * 70}ms`,
-                      ["--reveal-delay" as string]: `${index * 100}ms`,
-                    }}
-                  >
-                    <div className="flex h-28 w-28 flex-col justify-between border border-[#1c1c1c] bg-[#111] px-4 py-4 text-white">
-                      <p className="pixel-font text-[0.62rem] uppercase tracking-[0.14em] text-white/65">
-                        0{index + 1}
-                      </p>
-                      <p className="text-[1.25rem] font-extrabold leading-none tracking-[-0.08em]">
-                        {combo.badgeCode}
-                      </p>
-                      <p className="text-[0.7rem] leading-tight text-white/70">
-                        {combo.badgeLabel}
-                      </p>
-                    </div>
-
-                    <div className="mt-6 flex flex-1 flex-col">
-                      <h3 className="text-[1.85rem] font-bold leading-tight tracking-[-0.05em] text-[#171717]">
-                        {combo.name}
-                      </h3>
-                      <p className="mt-3 text-base leading-relaxed text-[#535353]">
-                        Preco separado: {combo.separatePrice}
-                      </p>
-                      <div className="mt-5 min-h-[122px]">
-                        <p className="text-[2.25rem] font-extrabold tracking-[-0.06em] text-[#181818]">
-                          {combo.comboPrice}
-                        </p>
-                      </div>
-
-                      <Link href="/contato" className="mt-3 block">
-                        <span className="inline-flex w-full items-center justify-center border border-[#1c1c1c] px-5 py-4 text-center text-base font-semibold text-[#111] transition-colors duration-200 hover:bg-[#f3f3f3]">
-                          Quero esse combo
-                        </span>
-                      </Link>
-
-                      <div className="mt-8 space-y-3">
-                        <p className="text-[1.15rem] font-semibold tracking-[-0.04em] text-[#181818]">
-                          O que inclui
-                        </p>
-                        {combo.items.map((item) => (
-                          <p
-                            key={item}
-                            className="text-base leading-relaxed text-[#4c4c4c]"
-                          >
-                            + {item}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <PricingContainer
+                className="intro-scale"
+                plans={combos}
+              />
 
               <div className="flex justify-center pt-2">
                 <Link href="/contato" className="offset-shadow self-start">

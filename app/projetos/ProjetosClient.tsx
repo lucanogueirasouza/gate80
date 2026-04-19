@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ReactLenis } from "lenis/react";
 import { useEffect, useRef, useState } from "react";
-import { projectCaseStudies } from "./data";
-import { NavbarBrand } from "../components/NavbarBrand";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { VariableProximity } from "@/components/ui/variable-proximity";
+import ScrollFloat from "../components/ScrollFloat";
+import ScrollStack, { ScrollStackItem } from "../components/ScrollStack";
+import { SiteNavbar } from "../components/SiteNavbar";
 import { siteConfig } from "../siteConfig";
 import { useScrollReveal } from "../useScrollReveal";
+import { projectCaseStudies } from "./data";
+import stackStyles from "./ProjetosStack.module.css";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -23,12 +25,6 @@ const footerLinks = [
   { label: "Termos & Condições", href: "/termos" },
   { label: "Fale com a Gate80", href: "/contato" },
 ];
-
-type MenuToggleProps = {
-  isOpen: boolean;
-  onClick: () => void;
-  className?: string;
-};
 
 type SocialIconProps = {
   name: "instagram" | "linkedin" | "whatsapp" | "email";
@@ -101,39 +97,11 @@ function SocialIcon({ name }: SocialIconProps) {
   );
 }
 
-function MenuToggle({ isOpen, onClick, className = "" }: MenuToggleProps) {
-  return (
-    <button
-      type="button"
-      aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-      aria-expanded={isOpen}
-      onClick={onClick}
-      className={`menu-toggle-button relative flex h-[62px] w-[62px] items-center justify-center border border-[#1c1c1c] bg-white sm:h-[74px] sm:w-[74px] ${className}`}
-    >
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "rotate-45 translate-y-0" : "-translate-y-[8px] sm:-translate-y-[10px]"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-200 ease-out sm:w-8 ${
-          isOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "-rotate-45 translate-y-0" : "translate-y-[8px] sm:translate-y-[10px]"
-        }`}
-      />
-    </button>
-  );
-}
-
 export default function ProjetosPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [footerHeight, setFooterHeight] = useState(0);
   const [rotation, setRotation] = useState(0);
   const footerRef = useRef<HTMLElement | null>(null);
+  const titleContainerRef = useRef<HTMLDivElement | null>(null);
 
   useScrollReveal();
 
@@ -144,18 +112,12 @@ export default function ProjetosPage() {
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
     const footer = footerRef.current;
-
-    if (!footer) {
-      return;
-    }
+    if (!footer) return;
 
     const updateFooterHeight = () => {
       setFooterHeight(footer.offsetHeight);
@@ -163,25 +125,11 @@ export default function ProjetosPage() {
 
     updateFooterHeight();
     window.addEventListener("resize", updateFooterHeight);
-
-    return () => {
-      window.removeEventListener("resize", updateFooterHeight);
-    };
+    return () => window.removeEventListener("resize", updateFooterHeight);
   }, []);
 
   return (
-    <ReactLenis
-      root
-      options={{
-        autoRaf: true,
-        lerp: 0.085,
-        duration: 1.15,
-        smoothWheel: true,
-        syncTouch: false,
-        wheelMultiplier: 0.95,
-        touchMultiplier: 1,
-      }}
-    >
+    <>
       <main
         className="relative z-10 min-h-screen overflow-x-hidden bg-white"
         style={{ marginBottom: footerHeight ? `${footerHeight}px` : undefined }}
@@ -189,80 +137,37 @@ export default function ProjetosPage() {
         <div aria-hidden="true" className="hero-dots" />
 
         <div className="page-fade-in relative z-10 mx-auto flex min-h-screen w-full max-w-[1520px] flex-col px-4 py-4 sm:px-8 sm:py-8 lg:px-14">
-          <div className="relative z-30">
-            <header className="relative z-10 flex items-start justify-between intro-rise">
-              <Link href="/" className="inline-flex items-center">
-                <NavbarBrand />
-              </Link>
+          <SiteNavbar items={navItems} footerItems={footerLinks} />
 
-              <div className="flex items-center gap-3">
-                <ThemeToggle />
-                <div className="offset-shadow">
-                  <MenuToggle
-                    isOpen={menuOpen}
-                    onClick={() => setMenuOpen((current) => !current)}
-                    className="offset-shadow__surface"
-                  />
-                </div>
-              </div>
-            </header>
-
-            <div
-              className={`absolute inset-x-0 top-0 z-20 overflow-hidden border border-[#2f2f2f] bg-[#1f1f1f] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${
-                menuOpen
-                  ? "pointer-events-auto max-h-[520px] translate-y-0 opacity-100"
-                  : "pointer-events-none max-h-0 -translate-y-2 opacity-0"
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <Link
-                  href="/"
-                  className="inline-flex items-center px-4 py-5"
-                >
-                  <NavbarBrand />
-                </Link>
-
-                <MenuToggle
-                  isOpen={menuOpen}
-                  onClick={() => setMenuOpen(false)}
-                  className="transition-colors duration-150 hover:bg-[#f3f3f3]"
-                />
-              </div>
-
-              <nav aria-label="Navegacao principal" className="pb-3">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex justify-center border-t border-[#2f2f2f] px-4 py-5 text-center text-[1.9rem] font-semibold tracking-tight transition-colors duration-200 hover:bg-white hover:text-[#111] sm:text-4xl md:text-5xl"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </div>
           <section className="relative pt-16 sm:pt-20 lg:pt-24">
-            <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
-              <div className="space-y-7" data-reveal="left">
+            <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
+              <div className="space-y-6 sm:space-y-7" data-reveal="left">
                 <p className="pixel-font text-xs uppercase tracking-[0.18em] text-[#5d5d5d] sm:text-sm">
                   + Work
                 </p>
-                <h1
-                  className="intro-rise max-w-[920px] text-[2.45rem] font-extrabold leading-[0.9] tracking-[-0.08em] text-[#181818] sm:text-[4.2rem] lg:text-[5.3rem]"
+                <div
+                  ref={titleContainerRef}
+                  className="intro-rise relative max-w-[920px]"
                   style={{ ["--intro-delay" as string]: "80ms" }}
                 >
-                  Projetos com imagem forte, leitura clara e presença digital
-                  bem resolvida.
-                </h1>
+                  <h1 className="text-[2.15rem] font-extrabold leading-[0.94] tracking-[-0.08em] text-[#181818] sm:text-[4.2rem] lg:text-[5.3rem]">
+                    <VariableProximity
+                      label={`Projetos com\nimagem forte,\nleitura clara e\npresença digital\nbem resolvida.`}
+                      containerRef={titleContainerRef}
+                      radius={150}
+                      falloff="gaussian"
+                      fromFontVariationSettings="'wght' 620"
+                      toFontVariationSettings="'wght' 800"
+                    />
+                  </h1>
+                </div>
                 <p
-                  className="intro-rise max-w-[700px] text-lg leading-relaxed text-[#4d4d4d] sm:text-xl"
+                  className="intro-rise max-w-[700px] text-base leading-relaxed text-[#4d4d4d] sm:text-xl"
                   style={{ ["--intro-delay" as string]: "160ms" }}
                 >
-                  Esta página reúne algumas direções visuais e trabalhos que
-                  mostram como a Gate80 pensa estrutura, contraste e clareza
-                  para transformar uma marca em algo mais memorável no digital.
+                  Esta página reúne algumas direções visuais e trabalhos que mostram
+                  como a Gate80 pensa estrutura, contraste e clareza para transformar
+                  uma marca em algo mais memorável no digital.
                 </p>
               </div>
 
@@ -271,93 +176,141 @@ export default function ProjetosPage() {
                   className="absolute right-[0%] top-[-6%] flex h-[310px] w-[310px] items-center justify-center opacity-35"
                   style={{ transform: `rotate(${rotation}deg)` }}
                 >
-                  <span className="text-[14.5rem] leading-none text-[#d9dbde]">
-                    ✺
-                  </span>
+                  <span className="text-[14.5rem] leading-none text-[#d9dbde]">✺</span>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="relative py-20 sm:py-24">
-            <div className="grid gap-8 xl:grid-cols-2">
+          <section className="relative pt-4 pb-24 sm:pt-8 sm:pb-40">
+            <ScrollStack
+              useWindowScroll
+              itemDistance={100}
+              itemScale={0.03}
+              itemStackDistance={30}
+              stackPosition="20%"
+              scaleEndPosition="10%"
+              baseScale={0.85}
+              rotationAmount={0}
+              blurAmount={0}
+              className="mx-auto w-full"
+            >
               {projectCaseStudies.map((project, index) => (
-                <article
-                  key={project.name}
-                  data-reveal={index % 2 === 0 ? "left" : "right"}
-                  className="intro-scale mx-auto w-full max-w-[560px]"
-                  style={{
-                    ["--intro-delay" as string]: `${index * 80}ms`,
-                    ["--reveal-delay" as string]: `${index * 110}ms`,
-                  }}
-                >
-                  <div className="border border-[#1c1c1c] bg-white p-[10px] shadow-[4px_4px_0_#1c1c1c] sm:p-3">
-                    <div
-                      className={`relative aspect-[1/0.98] overflow-hidden border border-[#1c1c1c] ${project.frameClass}`}
-                    >
-                      <div className="flex h-full items-center justify-center p-2 sm:p-3">
-                        <div
-                          className={`flex h-full w-full items-center justify-center ${project.imageWrapClass}`}
-                        >
-                          <Image
-                            src={project.logo}
-                            alt={project.logoAlt ?? project.name}
-                            className="h-auto w-[96%] max-w-[500px] object-contain"
-                            sizes="(min-width: 1280px) 430px, (min-width: 640px) 44vw, 84vw"
-                          />
+                <ScrollStackItem key={project.slug} itemClassName={stackStyles.stackItem}>
+                  <article
+                    className={`${stackStyles.stackCard} ${
+                      project.slug === "automacao-atendimento-whatsapp" ||
+                      project.slug === "controle-de-estoque"
+                        ? stackStyles.finalCompactCard
+                        : project.name.length > 22 ||
+                            project.description.length > 95
+                          ? stackStyles.compactCard
+                          : ""
+                    } ${
+                      project.name.length > 22 ||
+                      project.description.length > 95
+                        ? stackStyles.compactCard
+                        : ""
+                    }`.trim()}
+                  >
+                    <div className={stackStyles.stackSurface}>
+                      <div className={stackStyles.mediaPane}>
+                        <div className={stackStyles.mediaInner}>
+                          <div
+                            className={`${stackStyles.mediaFrame} ${project.frameClass} ${project.imageWrapClass}`}
+                          >
+                            <Image
+                              src={project.logo}
+                              alt={project.logoAlt ?? project.name}
+                              className="h-auto w-[88%] max-w-[520px] object-contain sm:w-[92%]"
+                              sizes="(min-width: 1024px) 44vw, 88vw"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className={stackStyles.contentPane}>
+                        <span className={`${stackStyles.eyebrow} pixel-font`}>
+                          {project.heroTag.replace("+ ", "")}
+                        </span>
+
+                        <div>
+                          <h2 className={stackStyles.title}>{project.name}</h2>
+                          <p className={stackStyles.category}>{project.category}</p>
+                        </div>
+
+                        <p className={stackStyles.description}>{project.description}</p>
+
+                        <div className={stackStyles.metaGrid}>
+                          <div className={stackStyles.metaItem}>
+                            <p className={`${stackStyles.metaLabel} pixel-font`}>Direção</p>
+                            <p className={stackStyles.metaValue}>{project.heroBody}</p>
+                          </div>
+                        </div>
+
+                        <div className={stackStyles.actions}>
+                          <span className={`${stackStyles.index} pixel-font`}>
+                            0{index + 1}
+                          </span>
+                          <Link
+                            href={`/projetos/${project.slug}`}
+                            className="offset-shadow shrink-0 self-start"
+                          >
+                            <span className="offset-shadow__surface inline-flex border border-[#1c1c1c] bg-white px-4 py-3 text-sm font-semibold text-[#111] sm:px-5 sm:text-base">
+                              Ver estudo de caso
+                            </span>
+                          </Link>
                         </div>
                       </div>
                     </div>
-
-                    <div className="border-x border-b border-[#1c1c1c] bg-white px-5 py-4">
-                      <p className="text-[1.5rem] font-semibold tracking-[-0.05em] text-[#171717]">
-                        {project.name}
-                      </p>
-                    </div>
-                    <div className="w-fit border-x border-b border-[#1c1c1c] bg-white px-5 py-3 text-base text-[#4f4f4f]">
-                      {project.category}
-                    </div>
-                  </div>
-
-                  <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                    <p className="max-w-[360px] text-base leading-relaxed text-[#4f4f4f] sm:text-lg">
-                      {project.description}
-                    </p>
-                    <Link
-                      href={`/projetos/${project.slug}`}
-                      className="offset-shadow shrink-0 self-start"
-                    >
-                      <span className="offset-shadow__surface inline-flex border border-[#1c1c1c] bg-white px-5 py-3 text-sm font-semibold text-[#111] sm:text-base">
-                        Ver estudo de caso
-                      </span>
-                    </Link>
-                  </div>
-                </article>
+                  </article>
+                </ScrollStackItem>
               ))}
+            </ScrollStack>
+          </section>
+
+          <section className="relative pt-44 pb-16 sm:pt-56 sm:pb-24">
+            <div className="space-y-4 text-center sm:space-y-5">
+              <ScrollFloat
+                containerClassName="mx-auto max-w-[1180px]"
+                textClassName="text-center !text-[clamp(1.55rem,8.5vw,4rem)] !leading-[1.08] !tracking-[-0.05em]"
+                animationDuration={1.05}
+                stagger={0.022}
+              >
+                Projetos sob encomenda, feitos para parecerem certos.
+              </ScrollFloat>
+              <ScrollFloat
+                containerClassName="mx-auto max-w-[1180px]"
+                textClassName="text-center !text-[clamp(1.55rem,8.5vw,4rem)] !leading-[1.08] !tracking-[-0.05em]"
+                animationDuration={1.05}
+                stagger={0.022}
+              >
+                Do site institucional ao sistema interno, o projeto é montado para
+                caber no negócio e não o contrário.
+              </ScrollFloat>
             </div>
           </section>
 
-          <section className="relative py-20 sm:py-24">
+          <section className="relative py-16 sm:py-24">
             <div
               data-reveal="up"
-              className="intro-rise grid gap-8 border border-[#1c1c1c] bg-white p-6 shadow-[4px_4px_0_#1c1c1c] sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center"
+              className="intro-rise grid gap-6 border border-[#1c1c1c] bg-white p-5 shadow-[4px_4px_0_#1c1c1c] sm:gap-8 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center"
             >
               <div className="space-y-4">
                 <p className="pixel-font text-xs uppercase tracking-[0.18em] text-[#5d5d5d] sm:text-sm">
                   + Next Project
                 </p>
-                <h2 className="text-[2.35rem] font-extrabold leading-[0.94] tracking-[-0.07em] text-[#1f1f1f] sm:text-[3rem]">
+                <h2 className="text-[2rem] font-extrabold leading-[0.96] tracking-[-0.07em] text-[#1f1f1f] sm:text-[3rem]">
                   Quer que o próximo projeto dessa página seja o seu?
                 </h2>
-                <p className="max-w-[720px] text-lg leading-relaxed text-[#565656]">
-                  A Gate80 pode desenhar sua landing page, página
-                  institucional ou direção visual com foco em presença,
-                  organização e conversão.
+                <p className="max-w-[720px] text-base leading-relaxed text-[#565656] sm:text-lg">
+                  A Gate80 pode desenhar sua landing page, página institucional ou
+                  direção visual com foco em presença, organização e conversão.
                 </p>
               </div>
 
               <Link href="/contato" className="offset-shadow self-start">
-                <span className="offset-shadow__surface inline-flex border border-[#1c1c1c] bg-white px-7 py-5 text-lg font-semibold text-[#111]">
+                <span className="offset-shadow__surface inline-flex border border-[#1c1c1c] bg-white px-6 py-4 text-base font-semibold text-[#111] sm:px-7 sm:py-5 sm:text-lg">
                   Falar com a Gate80
                 </span>
               </Link>
@@ -475,6 +428,6 @@ export default function ProjetosPage() {
           </div>
         </div>
       </footer>
-    </ReactLenis>
+    </>
   );
 }

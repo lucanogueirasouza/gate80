@@ -1,0 +1,73 @@
+.scroller {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: visible;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+
+.scroller[data-window-scroll] {
+  height: auto;
+  overflow: visible;
+}
+
+.scroller[data-window-scroll] .inner {
+  padding-bottom: 28rem;
+}
+
+.inner {
+  padding: 20vh 5rem 50rem;
+  min-height: 100vh;
+}
+
+.cardWrapper {
+  position: relative;
+  width: 100%;
+  transform: translateZ(0);
+}
+
+.card {
+  transform-origin: top center;
+  will-change: transform, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  height: 38rem;
+  width: 100%;
+  margin: 30px 0;
+  padding: 4rem;
+  border-radius: 46px;
+  box-sizing: border-box;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  position: relative;
+}
+
+.end {
+  width: 100%;
+  height: 1px;
+}
+
+@media (max-width: 768px) {
+  .inner {
+    padding: 14vh 0.4rem 24rem;
+  }
+
+  .scroller[data-window-scroll] .inner {
+    padding-bottom: 12rem;
+  }
+
+  .card {
+    height: auto;
+    min-height: 36rem;
+    margin: 20px 0;
+    padding: 0.75rem;
+    border-radius: 24px;
+  }
+}

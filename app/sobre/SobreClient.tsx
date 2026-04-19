@@ -1,11 +1,11 @@
 ﻿"use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ReactLenis } from "lenis/react";
 import { useEffect, useRef, useState } from "react";
-import { NavbarBrand } from "../components/NavbarBrand";
-import { ThemeToggle } from "../components/ThemeToggle";
+import ProfileCard from "../components/ProfileCard";
+import SpotlightCard from "../components/SpotlightCard";
+import { SiteNavbar } from "../components/SiteNavbar";
 import { useScrollReveal } from "../useScrollReveal";
 import aironImage from "@/public/image.png";
 import lucaImage from "@/public/luca.jpeg";
@@ -30,15 +30,15 @@ const team = [
     name: "Luca",
     role: "Desenvolvedor web, UX/UI & Automações",
     image: lucaImage,
-    accent: "bg-[#f3efe7]",
-    imageClass: "h-full w-full object-cover object-[center_20%]",
+    contactText: "Falar",
+    gradient: "linear-gradient(145deg,#121212 0%,#232743 100%)",
   },
   {
     name: "Airon",
     role: "Automações & Gerenciamento",
     image: aironImage,
-    accent: "bg-[#ece8df]",
-    imageClass: "h-[76%] w-[76%] object-cover object-[center_14%]",
+    contactText: "Falar",
+    gradient: "linear-gradient(145deg,#101010 0%,#26303a 100%)",
   },
 ];
 
@@ -60,12 +60,6 @@ const processSteps = [
     body: "Publicamos, refinamos e entregamos um projeto pronto para operar e crescer junto com a empresa.",
   },
 ];
-
-type MenuToggleProps = {
-  isOpen: boolean;
-  onClick: () => void;
-  className?: string;
-};
 
 type SocialIconProps = {
   name: "instagram" | "linkedin" | "whatsapp" | "email";
@@ -138,36 +132,7 @@ function SocialIcon({ name }: SocialIconProps) {
   );
 }
 
-function MenuToggle({ isOpen, onClick, className = "" }: MenuToggleProps) {
-  return (
-    <button
-      type="button"
-      aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-      aria-expanded={isOpen}
-      onClick={onClick}
-      className={`menu-toggle-button relative flex h-[62px] w-[62px] items-center justify-center border border-[#1c1c1c] bg-white sm:h-[74px] sm:w-[74px] ${className}`}
-    >
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "rotate-45 translate-y-0" : "-translate-y-[8px] sm:-translate-y-[10px]"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-200 ease-out sm:w-8 ${
-          isOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
-        }`}
-      />
-      <span
-        className={`menu-toggle-line absolute h-[3px] w-7 bg-[#181818] transition-all duration-300 ease-out sm:w-8 ${
-          isOpen ? "-rotate-45 translate-y-0" : "translate-y-[8px] sm:translate-y-[10px]"
-        }`}
-      />
-    </button>
-  );
-}
-
 export default function SobrePage() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [footerHeight, setFooterHeight] = useState(0);
   const [rotation, setRotation] = useState(0);
   const footerRef = useRef<HTMLElement | null>(null);
@@ -226,60 +191,7 @@ export default function SobrePage() {
         <div aria-hidden="true" className="hero-dots" />
 
         <div className="page-fade-in relative z-10 mx-auto flex min-h-screen w-full max-w-[1520px] flex-col px-4 py-4 sm:px-8 sm:py-8 lg:px-14">
-          <div className="relative z-30">
-            <header className="relative z-10 flex items-start justify-between intro-rise">
-              <Link href="/" className="inline-flex items-center">
-                <NavbarBrand />
-              </Link>
-
-              <div className="flex items-center gap-3">
-                <ThemeToggle />
-                <div className="offset-shadow">
-                  <MenuToggle
-                    isOpen={menuOpen}
-                    onClick={() => setMenuOpen((current) => !current)}
-                    className="offset-shadow__surface"
-                  />
-                </div>
-              </div>
-            </header>
-
-            <div
-              className={`absolute inset-x-0 top-0 z-20 overflow-hidden border border-[#2f2f2f] bg-[#1f1f1f] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${
-                menuOpen
-                  ? "pointer-events-auto max-h-[520px] translate-y-0 opacity-100"
-                  : "pointer-events-none max-h-0 -translate-y-2 opacity-0"
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <Link
-                  href="/"
-                  className="inline-flex items-center px-4 py-5"
-                >
-                  <NavbarBrand />
-                </Link>
-
-                <MenuToggle
-                  isOpen={menuOpen}
-                  onClick={() => setMenuOpen(false)}
-                  className="transition-colors duration-150 hover:bg-[#f3f3f3]"
-                />
-              </div>
-
-              <nav aria-label="Navegacao principal" className="pb-3">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex justify-center border-t border-[#2f2f2f] px-4 py-5 text-center text-[1.9rem] font-semibold tracking-tight transition-colors duration-200 hover:bg-white hover:text-[#111] sm:text-4xl md:text-5xl"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </div>
+          <SiteNavbar items={navItems} footerItems={footerLinks} />
           <section className="relative pt-16 sm:pt-20 lg:pt-24">
             <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
               <div className="space-y-7" data-reveal="left">
@@ -343,30 +255,39 @@ export default function SobrePage() {
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-3">
-                    <div className="border border-white/20 bg-white/5 px-4 py-5 backdrop-blur-[2px]">
+                    <SpotlightCard
+                      spotlightColor="rgba(255,255,255,0.08)"
+                      className="border border-white/20 bg-white/5 px-4 py-5 backdrop-blur-[2px]"
+                    >
                       <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-white/65">
                         01
                       </p>
                       <p className="mt-3 text-lg font-semibold tracking-[-0.05em] text-white">
                         Landing pages
                       </p>
-                    </div>
-                    <div className="border border-white/20 bg-white/5 px-4 py-5 backdrop-blur-[2px]">
+                    </SpotlightCard>
+                    <SpotlightCard
+                      spotlightColor="rgba(255,255,255,0.08)"
+                      className="border border-white/20 bg-white/5 px-4 py-5 backdrop-blur-[2px]"
+                    >
                       <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-white/65">
                         02
                       </p>
                       <p className="mt-3 text-lg font-semibold tracking-[-0.05em] text-white">
                         Sistemas web
                       </p>
-                    </div>
-                    <div className="border border-white/20 bg-white/5 px-4 py-5 backdrop-blur-[2px]">
+                    </SpotlightCard>
+                    <SpotlightCard
+                      spotlightColor="rgba(255,255,255,0.08)"
+                      className="border border-white/20 bg-white/5 px-4 py-5 backdrop-blur-[2px]"
+                    >
                       <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-white/65">
                         03
                       </p>
                       <p className="mt-3 text-lg font-semibold tracking-[-0.05em] text-white">
                         Automações
                       </p>
-                    </div>
+                    </SpotlightCard>
                   </div>
                 </div>
               </div>
@@ -381,13 +302,18 @@ export default function SobrePage() {
                   <div className="absolute left-8 top-8 h-14 w-14 border border-[#1c1c1c] bg-[#181818] sm:left-16 sm:top-16 sm:h-24 sm:w-24" />
                   <div className="absolute left-10 top-10 h-14 w-14 bg-[#f5f1e8] sm:left-20 sm:top-20 sm:h-24 sm:w-24" />
 
-                  <div className="absolute right-4 top-4 max-w-[210px] border border-[#1c1c1c] bg-white px-4 py-3 shadow-[4px_4px_0_#1c1c1c] sm:right-10 sm:top-10 sm:max-w-[280px] sm:px-5 sm:py-4">
-                    <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-[#6a6a6a]">
-                      Presença & percepção
-                    </p>
-                    <p className="mt-3 text-lg font-semibold leading-snug tracking-[-0.05em] text-[#181818]">
-                      Estrutura, mensagem e entrega trabalhando juntas.
-                    </p>
+                  <div className="absolute right-4 top-4 max-w-[210px] sm:right-10 sm:top-10 sm:max-w-[280px]">
+                    <SpotlightCard
+                      spotlightColor="rgba(24,24,24,0.08)"
+                      className="border border-[#1c1c1c] bg-white px-4 py-3 shadow-[4px_4px_0_#1c1c1c] sm:px-5 sm:py-4"
+                    >
+                      <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-[#6a6a6a]">
+                        Presença & percepção
+                      </p>
+                      <p className="mt-3 text-lg font-semibold leading-snug tracking-[-0.05em] text-[#181818]">
+                        Estrutura, mensagem e entrega trabalhando juntas.
+                      </p>
+                    </SpotlightCard>
                   </div>
                 </div>
 
@@ -403,30 +329,39 @@ export default function SobrePage() {
                   </p>
 
                   <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                    <div className="border border-[#1c1c1c] bg-[#faf9f5] px-4 py-4">
+                    <SpotlightCard
+                      spotlightColor="rgba(24,24,24,0.08)"
+                      className="border border-[#1c1c1c] bg-[#faf9f5] px-4 py-4"
+                    >
                       <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-[#666]">
                         Foco
                       </p>
                       <p className="mt-3 text-base font-semibold tracking-[-0.04em] text-[#181818]">
                         Negócio antes de excesso visual
                       </p>
-                    </div>
-                    <div className="border border-[#1c1c1c] bg-[#faf9f5] px-4 py-4">
+                    </SpotlightCard>
+                    <SpotlightCard
+                      spotlightColor="rgba(24,24,24,0.08)"
+                      className="border border-[#1c1c1c] bg-[#faf9f5] px-4 py-4"
+                    >
                       <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-[#666]">
                         Entrega
                       </p>
                       <p className="mt-3 text-base font-semibold tracking-[-0.04em] text-[#181818]">
                         Design, código e operação alinhados
                       </p>
-                    </div>
-                    <div className="border border-[#1c1c1c] bg-[#faf9f5] px-4 py-4">
+                    </SpotlightCard>
+                    <SpotlightCard
+                      spotlightColor="rgba(24,24,24,0.08)"
+                      className="border border-[#1c1c1c] bg-[#faf9f5] px-4 py-4"
+                    >
                       <p className="pixel-font text-[0.58rem] uppercase tracking-[0.16em] text-[#666]">
                         Resultado
                       </p>
                       <p className="mt-3 text-base font-semibold tracking-[-0.04em] text-[#181818]">
                         Presença clara, profissional e memorável
                       </p>
-                    </div>
+                    </SpotlightCard>
                   </div>
                 </div>
               </div>
@@ -449,9 +384,9 @@ export default function SobrePage() {
                 </p>
               </div>
 
-              <div className="grid gap-8 lg:grid-cols-2">
+              <div className="grid justify-items-center gap-8 lg:grid-cols-2">
                 {team.map((person, index) => (
-                  <article
+                  <div
                     key={person.name}
                     data-reveal="up"
                     className="intro-scale mx-auto w-full max-w-[430px]"
@@ -460,26 +395,21 @@ export default function SobrePage() {
                       ["--reveal-delay" as string]: `${index * 110}ms`,
                     }}
                   >
-                    <div
-                      className={`relative flex min-h-[420px] items-end justify-center overflow-hidden border border-[#1c1c1c] ${person.accent}`}
-                    >
-                      <Image
-                        src={person.image}
-                        alt={person.name}
-                        className={person.imageClass}
-                        sizes="(min-width: 1024px) 360px, (min-width: 640px) 42vw, 100vw"
-                        priority
-                      />
-                    </div>
-                    <div className="border-x border-b border-[#1c1c1c] bg-white px-5 py-4 shadow-[4px_4px_0_#1c1c1c]">
-                      <p className="text-[1.45rem] font-semibold tracking-[-0.05em] text-[#171717]">
-                        {person.name}
-                      </p>
-                    </div>
-                    <div className="w-fit border-x border-b border-[#1c1c1c] bg-white px-5 py-3 text-base text-[#4f4f4f] shadow-[4px_4px_0_#1c1c1c]">
-                      {person.role}
-                    </div>
-                  </article>
+                    <ProfileCard
+                      avatarUrl={person.image.src}
+                      name={person.name}
+                      title={person.role}
+                      contactText={person.contactText}
+                      showUserInfo
+                      enableTilt
+                      enableMobileTilt={false}
+                      onContactClick={() => {
+                        window.location.href = "/contato";
+                      }}
+                      behindGlowEnabled={false}
+                      innerGradient={person.gradient}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
@@ -506,8 +436,9 @@ export default function SobrePage() {
 
               <div className="grid gap-6 md:grid-cols-2">
                 {processSteps.map((step, index) => (
-                  <article
+                  <SpotlightCard
                     key={step.title}
+                    spotlightColor="rgba(24,24,24,0.08)"
                     data-reveal={index % 2 === 0 ? "up" : "right"}
                     className="intro-rise flex min-h-[230px] flex-col justify-between border border-[#1c1c1c] bg-white p-5 shadow-[4px_4px_0_#1c1c1c] sm:p-6"
                     style={{
@@ -528,7 +459,7 @@ export default function SobrePage() {
                     </div>
 
                     <div className="mt-8 h-px w-full bg-[#1c1c1c]" />
-                  </article>
+                  </SpotlightCard>
                 ))}
               </div>
             </div>

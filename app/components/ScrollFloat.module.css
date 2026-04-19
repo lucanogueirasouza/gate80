@@ -1,0 +1,20 @@
+.scrollFloat {
+  overflow: hidden;
+}
+
+.scrollFloatText {
+  display: inline-block;
+  font-size: clamp(1.6rem, 8vw, 10rem);
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.5;
+  color: #171717;
+}
+
+.char {
+  display: inline-block;
+}
+
+:global(html.theme-dark) .scrollFloatText {
+  color: #eef1f4;
+}
