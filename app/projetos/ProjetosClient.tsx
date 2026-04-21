@@ -182,7 +182,7 @@ export default function ProjetosPage() {
             </div>
           </section>
 
-          <section className="relative pt-4 pb-24 sm:pt-8 sm:pb-40">
+          <section className="relative pt-4 pb-0 sm:pt-8 sm:pb-20 lg:pb-40">
             <ScrollStack
               useWindowScroll
               itemDistance={100}
@@ -269,7 +269,7 @@ export default function ProjetosPage() {
             </ScrollStack>
           </section>
 
-          <section className="relative pt-44 pb-16 sm:pt-56 sm:pb-24">
+          <section className="relative -mt-6 pt-0 pb-16 sm:mt-0 sm:pt-20 sm:pb-24 lg:pt-48">
             <div className="space-y-4 text-center sm:space-y-5">
               <ScrollFloat
                 containerClassName="mx-auto max-w-[1180px]"

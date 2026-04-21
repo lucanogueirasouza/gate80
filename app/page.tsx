@@ -12,6 +12,7 @@ import {
   PricingContainer,
   type PricingPlan,
 } from "@/components/ui/pricing-container";
+import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
 import escolaLogo from "@/public/logo_escola/logo_escola.png";
 import farmandoAuraLogo from "@/public/logo_farmandoaura/logo_farmandoaura.png";
 import psicologoLogo from "@/public/logo_psicologo/logo_psicologo.png";
@@ -39,7 +40,7 @@ type ProjectCard = {
 
 const projects: ProjectCard[] = [
   {
-    tag: "Educacao",
+    tag: "Educação",
     title: "Escola de Cursos",
     description:
       "Landing page com identidade direta, foco em oferta educacional e uma hierarquia visual pensada para conversão.",
@@ -55,7 +56,7 @@ const projects: ProjectCard[] = [
     description:
       "Plataforma educacional para o ENEM com cursos, questões, redação, simulados e painel de progresso.",
     frameClass: "bg-[#faf9f5]",
-    accent: "Estudo guiado, constancia e preparo para aprovacao",
+    accent: "Estudo guiado, constância e preparo para aprovação",
     logo: farmandoAuraLogo,
     logoAlt: "Logo da Farmando Aura",
     caseStudyHref: "/projetos/farmando-aura",
@@ -75,7 +76,7 @@ const projects: ProjectCard[] = [
     tag: "Gate80",
     title: "Studio Visual",
     description:
-      "Uma exploracao visual da propria linguagem da Gate80, misturando contraste, estrutura e impacto.",
+      "Uma exploração visual da própria linguagem da Gate80, misturando contraste, estrutura e impacto.",
     frameClass: "bg-[#faf9f5]",
     accent: "Design, web e automações com assinatura própria",
   },
@@ -94,7 +95,7 @@ const projects: ProjectCard[] = [
 const combos: PricingPlan[] = [
   {
     name: "O Essencial",
-    comboPrice: "550 R$ a vista + 30 R$/mes",
+    comboPrice: "550 R$ à vista + 30 R$/mes",
     separatePrice: "635 R$ + 35 R$/mes",
     badgeCode: "ESS",
     badgeLabel: "Base digital",
@@ -107,7 +108,7 @@ const combos: PricingPlan[] = [
   },
   {
     name: "Restaurantes",
-    comboPrice: "500 R$ a vista",
+    comboPrice: "500 R$ à vista",
     separatePrice: "650 R$",
     badgeCode: "FOOD",
     badgeLabel: "Fluxo rápido",
@@ -120,15 +121,15 @@ const combos: PricingPlan[] = [
     isPopular: true,
   },
   {
-    name: "Organizacao",
-    comboPrice: "750 R$ a vista",
+    name: "Organização",
+    comboPrice: "750 R$ à vista",
     separatePrice: "900 R$",
     badgeCode: "OPS",
     badgeLabel: "Controle interno",
     features: [
       "Controle de estoque com VBA",
-      "Gestao financeira e vendas",
-      "Automacao de documentos",
+      "Gestão financeira e vendas",
+      "Automação de documentos",
     ],
     accent: "bg-[#4c4c4c]",
   },
@@ -350,60 +351,97 @@ export default function Home() {
           <SiteNavbar items={navItems} footerItems={footerLinks} />
           <section
             id="home"
-            className="relative flex flex-1 items-center py-16 sm:py-20 lg:py-10"
+            className="relative flex flex-1 flex-col justify-between py-20 sm:py-24 lg:py-28"
           >
-            <div className="w-full">
-              <div className="max-w-[1320px]">
-                <h1
-                  data-reveal="left"
-                  className="intro-rise max-w-[1280px] text-[2.45rem] font-extrabold leading-[0.88] tracking-[-0.08em] text-[#181818] sm:text-[4rem] lg:text-[5rem] xl:text-[5.45rem]"
-                  style={{ ["--intro-delay" as string]: "80ms" }}
-                >
-                  <span className="block">Construindo Experiências</span>
-                  <span className="strip-breathe my-3 flex w-fit max-w-full items-center gap-2 overflow-hidden whitespace-nowrap px-3 py-2 text-[1.28rem] leading-none text-[#f8f6ef] sm:my-4 sm:gap-4 sm:px-4 sm:text-[2.7rem] lg:my-5 lg:gap-5 lg:text-[3.55rem] xl:text-[3.9rem]">
-                    <span>landing page</span>
-                    <span>*</span>
-                    <span>web dev</span>
-                    <span>*</span>
-                    <span>planilhas</span>
-                    <span>{"\u21CC"}</span>
-                    <span>Gate80</span>
-                  </span>
-                  <span className="block">Digitais que Marcam</span>
-                </h1>
-
-                <p
-                  data-reveal="left"
-                  className="intro-rise mt-7 max-w-[720px] text-lg leading-relaxed text-[#3a3a3a] sm:text-xl"
-                  style={{ ["--intro-delay" as string]: "170ms" }}
-                >
-                  Sites, landing pages e sistemas sob medida para empresas que
-                  querem parecer grandes, vender melhor e transmitir confiança.
-                </p>
-              </div>
-
-              <div
-                data-reveal="up"
-                className="intro-rise mt-14 flex flex-col gap-8 lg:mt-20 lg:flex-row lg:items-center lg:gap-10"
-                style={{ ["--intro-delay" as string]: "240ms" }}
+            {/* Main content */}
+            <div className="flex flex-1 flex-col justify-center">
+              {/* Label */}
+              <p
+                className="intro-rise pixel-font mb-8 text-[0.65rem] uppercase tracking-[0.22em] text-[#888] sm:text-[0.72rem]"
+                style={{ ["--intro-delay" as string]: "0ms" }}
               >
-                <Link href="/contato" className="offset-shadow self-start">
-                  <span className="offset-shadow__surface inline-flex w-full justify-center border border-[#1c1c1c] bg-white px-6 py-4 text-base font-semibold text-[#111] sm:w-fit sm:px-7 sm:py-5 sm:text-lg">
-                    Fale Conosco!
-                  </span>
-                </Link>
+                Studio digital · Gate80
+              </p>
 
-                <div className="flex flex-1 justify-start lg:justify-end">
-                  <div className="max-w-[360px] text-left lg:text-right">
-                    <p className="text-[1.45rem] font-semibold leading-tight tracking-[-0.04em] text-[#1a1a1a] sm:text-[1.7rem]">
-                      Profissional, criativa e confiável
-                    </p>
-                    <p className="mt-2 text-sm text-[#505050] sm:text-base">
-                      Gate80 entrega interfaces sob medida com foco em negócio,
-                      performance e presença digital.
-                    </p>
-                  </div>
+              {/* Headline */}
+              <h1
+                className="intro-rise max-w-[1100px] text-[3.2rem] font-extrabold leading-[0.88] tracking-[-0.09em] text-[#181818] sm:text-[5.5rem] lg:text-[7.2rem] xl:text-[8rem]"
+                style={{ ["--intro-delay" as string]: "60ms" }}
+              >
+                Construindo experiências digitais que marcam.
+              </h1>
+
+              {/* Subline + CTA row */}
+              <div
+                className="intro-rise mt-10 flex flex-col gap-8 sm:mt-12 lg:flex-row lg:items-end lg:justify-between"
+                style={{ ["--intro-delay" as string]: "150ms" }}
+              >
+                <div className="max-w-[520px] text-[1.05rem] font-light leading-[1.25] tracking-[-0.03em] text-[#5a5a5a] sm:text-[1.35rem]">
+                  Ajudamos marcas que desejam{" "}
+                  <AnimatedTextCycle
+                    words={["construir", "evoluir", "destacar", "consolidar"]}
+                    interval={2200}
+                    className="font-semibold text-[#181818]"
+                  />{" "}
+                  uma presença digital forte.
                 </div>
+
+                <div className="flex items-center gap-4">
+                  <Link href="/contato" className="offset-shadow inline-flex self-start group">
+                    <span className="offset-shadow__surface inline-flex items-center gap-3 border border-[#1c1c1c] bg-white px-6 py-4 text-base font-semibold text-[#111] sm:px-7 sm:py-5 sm:text-lg">
+                      <span>Começar agora</span>
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        className="h-5 w-5 transition-transform duration-300 ease-out group-hover:scale-125 group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                      </svg>
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Services marquee strip */}
+            <div
+              className="intro-rise mt-16 overflow-hidden sm:mt-20 w-screen relative left-1/2 -translate-x-1/2"
+              style={{ ["--intro-delay" as string]: "300ms" }}
+              aria-hidden="true"
+            >
+              <div className="footer-marquee select-none">
+                {[
+                  "Sites institucionais",
+                  "Landing pages",
+                  "Sistemas web",
+                  "Automações",
+                  "Dashboards",
+                  "Design de interfaces",
+                  "Bots para WhatsApp",
+                  "Identidade visual",
+                  "Sites institucionais",
+                  "Landing pages",
+                  "Sistemas web",
+                  "Automações",
+                  "Dashboards",
+                  "Design de interfaces",
+                  "Bots para WhatsApp",
+                  "Identidade visual",
+                ].map((item, i) => (
+                  <span
+                    key={i}
+                    className="pixel-font pr-10 text-[0.6rem] uppercase tracking-[0.2em] text-[#b0b0b0] sm:text-[0.65rem]"
+                  >
+                    {item}
+                    <span className="ml-10 opacity-40">◆</span>
+                  </span>
+                ))}
               </div>
             </div>
           </section>
@@ -418,7 +456,7 @@ export default function Home() {
                   Sobre a Gate80
                 </p>
                 <h2 className="intro-rise max-w-[720px] text-[2.55rem] font-extrabold leading-[0.9] tracking-[-0.07em] text-[#181818] sm:text-[3.4rem] lg:text-[4.25rem]">
-                  Solucoes digitais que ajudam empresas a parecer maiores,
+                  Soluções digitais que ajudam empresas a parecer maiores,
                   vender melhor e trabalhar com mais clareza.
                 </h2>
                 <p className="max-w-[640px] text-lg leading-relaxed text-[#454545] sm:text-xl">

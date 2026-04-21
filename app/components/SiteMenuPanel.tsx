@@ -45,6 +45,29 @@ export function SiteMenuPanel({
     };
   }, [open, onClose]);
 
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+    const previousHtmlOverscroll = html.style.overscrollBehavior;
+    const previousBodyOverscroll = body.style.overscrollBehavior;
+
+    if (open) {
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      html.style.overscrollBehavior = "none";
+      body.style.overscrollBehavior = "none";
+    }
+
+    return () => {
+      html.style.overflow = previousHtmlOverflow;
+      body.style.overflow = previousBodyOverflow;
+      html.style.overscrollBehavior = previousHtmlOverscroll;
+      body.style.overscrollBehavior = previousBodyOverscroll;
+    };
+  }, [open]);
+
   const layerColors = (() => {
     const raw = colors.length ? colors.slice(0, 4) : ["#d8d2c5", "#111111"];
     const next = [...raw];

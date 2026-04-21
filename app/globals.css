@@ -135,7 +135,7 @@ button {
 }
 
 .hero-dots::before {
-  background-image: radial-gradient(circle, rgba(24, 24, 24, 0.18) 1.15px, transparent 1.35px);
+  background-image: radial-gradient(circle, rgba(24, 24, 24, 0.1) 1.15px, transparent 1.35px);
   background-size: 18px 18px;
   background-position: 0 0;
 }
@@ -358,7 +358,7 @@ html.theme-dark .hero-dots {
 }
 
 html.theme-dark .hero-dots::before {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1.15px, transparent 1.35px);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1.15px, transparent 1.35px);
 }
 
 html.theme-dark .hero-dots::after {
