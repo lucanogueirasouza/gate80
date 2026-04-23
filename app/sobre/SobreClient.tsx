@@ -8,6 +8,7 @@ import SpotlightCard from "../components/SpotlightCard";
 import { SiteNavbar } from "../components/SiteNavbar";
 import { useScrollReveal } from "../useScrollReveal";
 import aironImage from "@/public/image.png";
+import jozaImage from "@/public/joza.jpeg";
 import lucaImage from "@/public/luca.jpeg";
 import { siteConfig } from "../siteConfig";
 
@@ -27,18 +28,25 @@ const footerLinks = [
 
 const team = [
   {
-    name: "Luca",
-    role: "Desenvolvedor web, UX/UI & Automações",
-    image: lucaImage,
-    contactText: "Falar",
-    gradient: "linear-gradient(145deg,#121212 0%,#232743 100%)",
-  },
-  {
     name: "Airon",
     role: "Automações & Gerenciamento",
     image: aironImage,
     contactText: "Falar",
     gradient: "linear-gradient(145deg,#101010 0%,#26303a 100%)",
+  },
+  {
+    name: "Luca",
+    role: "Desenvolvedor front-end, back-end, UX/UI & Automações",
+    image: lucaImage,
+    contactText: "Falar",
+    gradient: "linear-gradient(145deg,#121212 0%,#232743 100%)",
+  },
+  {
+    name: "Jozadaque",
+    role: "Marketing",
+    image: jozaImage,
+    contactText: "Falar",
+    gradient: "linear-gradient(145deg,#141414 0%,#3a2f24 100%)",
   },
 ];
 
@@ -384,7 +392,7 @@ export default function SobrePage() {
                 </p>
               </div>
 
-              <div className="grid justify-items-center gap-8 lg:grid-cols-2">
+              <div className="grid justify-items-center gap-8 md:grid-cols-2 xl:grid-cols-3">
                 {team.map((person, index) => (
                   <div
                     key={person.name}
