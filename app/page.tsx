@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -94,43 +94,40 @@ const projects: ProjectCard[] = [
 
 const combos: PricingPlan[] = [
   {
-    name: "O Essencial",
-    comboPrice: "550 R$ à vista + 30 R$/mes",
-    separatePrice: "635 R$ + 35 R$/mes",
-    badgeCode: "ESS",
-    badgeLabel: "Base digital",
-    features: [
-      "Google Meu Negócio",
-      "Landing page simples",
-      "Cardápio ou catálogo digital",
-    ],
+    name: "Landing pages",
+    description:
+      "Páginas pensadas para apresentar oferta, captar leads e transformar atenção em contato com clareza.",
     accent: "bg-[#4c4c4c]",
   },
   {
-    name: "Restaurantes",
-    comboPrice: "500 R$ à vista",
-    separatePrice: "650 R$",
-    badgeCode: "FOOD",
-    badgeLabel: "Fluxo rápido",
-    features: [
-      "Cardápio digital com QR Code",
-      "Bot de atendimento para WhatsApp",
-      "Dashboard de vendas mensal",
-    ],
+    name: "Automações",
+    description:
+      "Fluxos digitais para reduzir tarefas manuais, organizar etapas e melhorar a operação no dia a dia.",
     accent: "bg-[#4c4c4c]",
     isPopular: true,
   },
   {
-    name: "Organização",
-    comboPrice: "750 R$ à vista",
-    separatePrice: "900 R$",
-    badgeCode: "OPS",
-    badgeLabel: "Controle interno",
-    features: [
-      "Controle de estoque com VBA",
-      "Gestão financeira e vendas",
-      "Automação de documentos",
-    ],
+    name: "Apps",
+    description:
+      "Aplicações sob medida para entregar experiência mais direta, leve e funcional em diferentes contextos.",
+    accent: "bg-[#4c4c4c]",
+  },
+  {
+    name: "Sites",
+    description:
+      "Sites institucionais e estruturas digitais para marcas que precisam se apresentar com mais força e profissionalismo.",
+    accent: "bg-[#4c4c4c]",
+  },
+  {
+    name: "Dashboards variados",
+    description:
+      "Painéis para leitura de dados, acompanhamento operacional e visualização rápida do que importa no negócio.",
+    accent: "bg-[#4c4c4c]",
+  },
+  {
+    name: "Sistemas sob medida",
+    description:
+      "Ferramentas desenvolvidas de acordo com a necessidade do cliente, com foco real no fluxo e na operação.",
     accent: "bg-[#4c4c4c]",
   },
 ];
@@ -162,9 +159,9 @@ const faqs = [
       "Sim. Podemos cuidar de hospedagem, manutenção, pequenos ajustes e suporte contínuo conforme o tipo de projeto contratado.",
   },
   {
-    question: "Se meu projeto não estiver na tabela de preços?",
+    question: "Se meu projeto não estiver nessa lista de serviços?",
     answer:
-      "Sem problema. A tabela serve como ponto de partida. Para demandas diferentes, montamos uma proposta personalizada com base no que sua empresa precisa.",
+      "Sem problema. Essa seção mostra apenas algumas frentes que atendemos. Para demandas diferentes, montamos uma proposta personalizada com base no que sua empresa precisa.",
   },
 ];
 
@@ -360,7 +357,7 @@ export default function Home() {
                 className="intro-rise pixel-font mb-8 text-[0.65rem] uppercase tracking-[0.22em] text-[#888] sm:text-[0.72rem]"
                 style={{ ["--intro-delay" as string]: "0ms" }}
               >
-                Studio digital · Gate80
+                Studio digital Â· Gate80
               </p>
 
               {/* Headline */}
@@ -439,7 +436,7 @@ export default function Home() {
                     className="pixel-font pr-10 text-[0.6rem] uppercase tracking-[0.2em] text-[#b0b0b0] sm:text-[0.65rem]"
                   >
                     {item}
-                    <span className="ml-10 opacity-40">◆</span>
+                    <span className="ml-10 opacity-40">â—†</span>
                   </span>
                 ))}
               </div>
@@ -654,15 +651,15 @@ export default function Home() {
             <div className="space-y-12">
               <div className="max-w-[920px] space-y-5" data-reveal="left">
                 <p className="pixel-font text-xs uppercase tracking-[0.18em] text-[#5b5b5b] sm:text-sm">
-                  + Precos
+                  + Serviços
                 </p>
                 <h2 className="text-[2.8rem] font-extrabold leading-[0.92] tracking-[-0.075em] text-[#4a4a4a] sm:text-[3.75rem] lg:text-[4.85rem]">
-                  Preços transparentes para empresas que querem começar agora.
+                  Alguns serviços que a Gate80 pode construir para o seu negócio.
                 </h2>
                 <p className="max-w-[760px] text-lg leading-relaxed text-[#595959] sm:text-xl">
-                  Três combos prontos para quem quer começar com clareza, preço
-                  definido e uma estrutura digital que faça sentido para o
-                  negócio.
+                  Sem pacote engessado e sem tabela fixa: aqui estão algumas
+                  das frentes que desenvolvemos para marcas que precisam de
+                  presença, organização e tecnologia bem aplicada.
                 </p>
               </div>
 
@@ -674,7 +671,7 @@ export default function Home() {
               <div className="flex justify-center pt-2">
                 <Link href="/contato" className="offset-shadow self-start">
                   <span className="offset-shadow__surface inline-flex border border-[#1c1c1c] bg-white px-8 py-5 text-lg font-semibold text-[#111]">
-                    Falar sobre outro projeto
+                    Pedir projeto sob medida
                   </span>
                 </Link>
               </div>
@@ -693,7 +690,7 @@ export default function Home() {
                     Tire suas dúvidas antes de começar.
                   </h2>
                   <p className="max-w-[620px] text-lg leading-relaxed text-[#595959] sm:text-xl">
-                    Aqui estao respostas diretas para as perguntas mais comuns
+                    Aqui estão respostas diretas para as perguntas mais comuns
                     sobre serviços, prazos, manutenção e como a Gate80 trabalha.
                   </p>
                 </div>
